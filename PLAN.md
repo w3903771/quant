@@ -63,7 +63,14 @@
   - `nlp`：transformers / datasets
   - `qlib`：pyqlib（Windows 安装见 ch06 注记）
 - **版本前沿性注意**：当前 numpy 2.x + pandas 3.0 较新，`vectorbt`/`alphalens`/`pyqlib` 可能需要降级或固定版本；在引入这些库的章节先实测，必要时在该章 `[dependency-groups]` 或局部说明里固定兼容版本，并记录在该章顶部"环境注记"。
-- **里程碑 1 先做"地基库联调冒烟测试"（评审 P0）**：在写 ch04/ch06/ch13 前，先单独验证 `vectorbt + alphalens-reloaded + pyqlib` 能否在选定 numpy2/pandas3 栈共存导入；若冲突，决策：①锁回兼容版本（可能 pandas 1.5/numpy 1.26，需隔离 group）②或砍掉该库的"框架实现"只保留"从零实现"。结论回写本节与对应章顶。
+- **里程碑 1「地基库联调冒烟测试」已完成（2026-06-22 实测）**：在 Python 3.11.11 / numpy 2.4.6 / pandas 3.0.3 主栈下隔离实测（`uv run --isolated`）——
+  - **vectorbt 0.28.2 ✅**：import + 最小回测运行时（`from_holding`）均通过；注意首次运行 numba JIT 编译需数分钟（正常现象，非兼容问题，可设 `NUMBA_DISABLE_JIT=1` 快速冒烟）。
+  - **pyqlib 0.9.7 ✅**：import 通过（含 gym 源码编译）；依赖重（169 包，含 mlflow/cvxpy/pyarrow），深度工作流（数据/模型）待 ch06 实跑确认。
+  - **alphalens-reloaded ❌**：传递依赖 `empyrical → pandas_datareader` 调用了 pandas 3.0 已改签名的内部函数 `deprecate_kwarg`，import 即崩。
+  - **alphalens 替代方案（已实测）**：绩效分析用 **quantstats 0.0.81 ✅** 或 **vectorbt `Portfolio.stats()` ✅**（24 指标含夏普/卡玛/索提诺）；因子 IC/分层/多空用 **qlib `qlib.contrib.eva.alpha.calc_ic / calc_long_short_return` ✅** 或**从零实现**。同属 Quantopian 系的 `empyrical-reloaded` / `pyfolio-reloaded` 与 alphalens 同因 `pandas_datareader` 崩、均不可用；升级最新 `pandas-datareader`（0.10，2021 停更）无效。
+  - **reference 佐证**：`reference/QuantsPlaybook` 凡用 `alphalens==0.4.0 + empyrical==0.5.5` 的研报**一律锁 pandas 1.x**；其最前沿研报（numpy2.4.4/pandas3.0.2）则**不含 alphalens**；`vnpy` 走 numpy2.2/pandas2.2 + alphalens-reloaded（未上 pandas3）。即「用 alphalens ⇔ 留在 pandas1.x」，与主栈相悖——放弃 alphalens 与前沿一致。
+  - **polars 角度 + 社区检索（2026-06-22）**：polars 1.41.2 实测兼容主栈、与 pandas 双向互转 OK，可作数据处理/特征工程**加速层**（`[dependency-groups] data`）——但**不能用它"修复"alphalens**（alphalens 内部硬依赖 pandas，喂不进 polars）；pandas 仍是生态对接（akshare/yfinance/qlib/vbt/sklearn）的通用格式。社区现状一致：`pandas-datareader` 已 unmaintained，官方 issue「Breakage coming in pandas 3.0」（pandas-datareader#1005），连累 empyrical/alphalens/pyfolio；通行解法是 pin pandas1.x 或换库。现代替代：vectorbt / qlib / quantstats（及 jquantstats）/ spectre（GPU 因子分析）。
+  - **决策**：vectorbt/pyqlib 主栈直接用（无需降级）；**ch03 因子分析走「从零实现 + qlib 评估」**，不依赖 alphalens；polars 列为选配数据加速。可复跑脚本：`guide/code/smoke_baseline_libs.py`。
 - **数据快照 / PIT 固定约定（评审 P0，保可复现）**：akshare/yfinance 为实时拉取，结果随日期变化。范式——首次拉取落盘 `guide/data/snapshots/<source>_<symbol>_<asof>.parquet`，脚本默认**读快照**而非每次联网；脚本头记录"数据获取日 as_of"。ch01.2 把它做成可运行范式，后续章复用。
 - 所有依赖清单集中在 `pyproject.toml`；各章顶部仅列"本章新增依赖 + 安装命令"。
 
@@ -108,7 +115,7 @@
 
 0. **里程碑 0（已完成）**：环境 + README + PLAN + 两份 OUTLINE + references 骨架 + survey 00 导读 + 本评审修订。
 1. **里程碑 1 — MVP 核心闭环（最高优先，全在稳定栈）**：
-   - 先跑**地基库联调冒烟测试**（§4.2），定下 vectorbt/alphalens/pyqlib 取舍。
+   - ✅ **地基库联调冒烟测试已完成**（2026-06-22，详见 §4.2）：vectorbt 0.28.2 / pyqlib 0.9.7 / quantstats / polars 主栈可用；alphalens 系（含 empyrical/pyfolio）与 pandas3 不兼容 → ch03 因子分析走「从零 + qlib 评估」。
    - 指南纵向打通：`ch00（玩具回测，含成本占位）→ ch01（数据快照/复权/指标）→ ch03（因子 IC/分层）→ ch04（回测引擎+绩效+PBO/DSR最小实现）→ ch06（GBDT/LightGBM 选股 + Qlib）`，全部达 `已实跑 ✅`。
    - 综述同步地基：`01（含 A股制度节）、02、04、11`。
    - 补 ch05（防泄漏 Purged/CPCV）作为 ch06 前置；guide 顶部加"防泄漏/成本红线"贯穿清单。

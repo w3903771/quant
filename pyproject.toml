@@ -23,8 +23,11 @@ dependencies = [
 [dependency-groups]
 backtest = [
     "backtrader>=1.9",          # 纯 Python 回测，安装稳
-    "vectorbt>=0.26",           # 向量化回测（依赖 numba）
-    "alphalens-reloaded>=0.4",  # 因子分析
+    "vectorbt>=0.26",           # 向量化回测；实测 0.28.2 兼容 numpy2.4/pandas3（2026-06-22 冒烟）
+    # alphalens-reloaded 已移除：与 pandas3 不兼容（empyrical→pandas_datareader 撞 deprecate_kwarg；
+    #   升级最新 pdr 0.10 仍崩，该库 2021 停更）。替代：因子评估用 qlib.contrib.eva.alpha + 从零实现；
+    #   绩效用 quantstats / vbt.Portfolio.stats()。详见 PLAN §4.2。如确需 alphalens 须另开 pandas<3 隔离环境。
+    "quantstats>=0.0.81",       # 组合绩效分析（夏普/回撤/月度）；实测兼容 numpy2.4/pandas3
 ]
 dl = [
     "torch>=2.2",               # 深度学习（体积较大）
@@ -39,7 +42,13 @@ nlp = [
     "datasets>=2.19",
 ]
 qlib = [
-    "pyqlib>=0.9.5",            # Microsoft Qlib，按需安装；Windows 安装见 ch06 注记
+    "pyqlib>=0.9.5",            # Microsoft Qlib；实测 0.9.7 import 兼容 numpy2.4/pandas3（依赖重 169 包，深度工作流待 ch06 实跑）
+]
+data = [
+    # 数据处理可选加速层（实测 polars 1.41.2 兼容 numpy2.4/pandas3，与 pandas 双向互转 OK）。
+    # 定位：大数据/特征工程用 polars 提速，下游喂 qlib/vbt/sklearn 时 .to_pandas()。vnpy alpha 扩展亦用 polars。
+    "polars>=1.4",
+    "pyarrow>=15",
 ]
 docs = [
     "mkdocs-material>=9.5",     # 文档站（含 mkdocs + pymdown-extensions）
