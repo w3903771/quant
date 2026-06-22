@@ -1,0 +1,77 @@
+# MkDocs 配置 —— 【量化综述】站
+# 预览： uv run mkdocs serve -f mkdocs.survey.yml
+# 构建： uv run mkdocs build -f mkdocs.survey.yml   （产物 -> _site/survey/）
+# 与 mkdocs.guide.yml 同源不同路径，部署到同一域名 quant.ebook.ttzg.site 的 /survey/
+
+site_name: 量化投资 · 技术综述
+site_description: 详尽中文技术综述：从传统 ML 到深度学习、强化学习、大模型与 Agent
+site_author: ttzg
+site_url: https://quant.ebook.ttzg.site/survey/
+copyright: © 2026 ttzg · 个人学习用 · 内容仅供学习，不构成任何投资建议
+
+docs_dir: survey
+site_dir: _site/survey
+
+# 不发布到站点的内部规划文件
+exclude_docs: |
+  OUTLINE.md
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/weather-night
+        name: 切换到暗色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到亮色
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      separator: '[\s​\-、。，！？；：“”‘’（）《》【】]+'
+
+extra_javascript:
+  - js/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  # 跨书互链：综述里指向指南用根相对路径 /guide/...
+  guide_url: /guide/

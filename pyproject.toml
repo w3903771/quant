@@ -1,0 +1,50 @@
+[project]
+name = "quant-study"
+version = "0.1.0"
+description = "独立量化学习环境：综述 + d2l 风格教学指南的可运行代码"
+requires-python = ">=3.11,<3.13"
+# 核心依赖：轻量、Windows 上有可靠 wheel、安装快，覆盖前 5 章（数据/组合/因子/回测/传统ML）
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "matplotlib>=3.8",
+    "scipy>=1.11",
+    "scikit-learn>=1.4",
+    "statsmodels>=0.14",
+    "akshare>=1.12",        # A股免费数据
+    "yfinance>=0.2.40",     # 美股/全球数据
+    "xgboost>=2.0",
+    "lightgbm>=4.3",
+    "tqdm>=4.66",
+    "ipykernel>=6.29",      # 便于 notebook / 交互式执行
+]
+
+# 重/可选依赖，按里程碑分组安装： uv sync --group dl  等
+[dependency-groups]
+backtest = [
+    "backtrader>=1.9",          # 纯 Python 回测，安装稳
+    "vectorbt>=0.26",           # 向量化回测（依赖 numba）
+    "alphalens-reloaded>=0.4",  # 因子分析
+]
+dl = [
+    "torch>=2.2",               # 深度学习（体积较大）
+]
+rl = [
+    "gymnasium>=0.29",
+    "stable-baselines3>=2.3",
+    # "finrl"  # 需要时再加，依赖较重，按官方文档安装
+]
+nlp = [
+    "transformers>=4.40",
+    "datasets>=2.19",
+]
+qlib = [
+    "pyqlib>=0.9.5",            # Microsoft Qlib，按需安装；Windows 安装见 ch06 注记
+]
+docs = [
+    "mkdocs-material>=9.5",     # 文档站（含 mkdocs + pymdown-extensions）
+    "jieba>=0.42",             # 中文搜索分词（Material 检测到 jieba 即启用）
+]
+
+[tool.uv]
+package = false                # 仅作为虚拟环境/脚本管理，不构建 quant-study 自身

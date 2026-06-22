@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+  量化学科首页 —— 部署后位于 https://quant.ebook.ttzg.site/
+  CI 会把本文件复制到 _site/index.html；/guide/ 与 /survey/ 由两套 MkDocs 站点提供。
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>量化投资 · 综述与教学指南</title>
+  <meta name="description" content="量化投资学习站：一份详尽中文技术综述（看脉络、看原理）+ 一份可运行的 Python 教学指南（动手实现、跑得通）。">
+  <style>
+    :root { --fg:#1b2430; --muted:#5b6675; --line:#e6e9ef; --a1:#3f51b5; --a2:#00897b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+           color:var(--fg); background:#f7f8fa; line-height:1.7; }
+    .wrap { max-width:880px; margin:0 auto; padding:64px 24px 80px; }
+    header h1 { font-size:2.1rem; margin:0 0 .4rem; }
+    header p { color:var(--muted); font-size:1.05rem; margin:.2rem 0 0; }
+    .cards { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:44px 0 28px; }
+    @media (max-width:640px){ .cards{ grid-template-columns:1fr; } }
+    .card { display:block; text-decoration:none; color:inherit; background:#fff; border:1px solid var(--line);
+            border-radius:14px; padding:26px 24px; transition:transform .12s ease, box-shadow .12s ease; }
+    .card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(20,30,50,.10); }
+    .card h2 { margin:.1rem 0 .5rem; font-size:1.35rem; }
+    .card.guide h2 { color:var(--a1); }
+    .card.survey h2 { color:var(--a2); }
+    .card .tag { font-size:.8rem; letter-spacing:.04em; color:var(--muted); text-transform:uppercase; }
+    .card p { color:var(--muted); margin:.4rem 0 0; font-size:.97rem; }
+    .note { color:var(--muted); font-size:.86rem; border-top:1px solid var(--line); padding-top:18px; margin-top:36px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>量化投资 · 综述与教学指南</h1>
+      <p>两份互补产物：一份看「为什么」的技术综述，一份学「怎么做」的可运行教学指南。</p>
+    </header>
+
+    <div class="cards">
+      <a class="card guide" href="/guide/">
+        <div class="tag">动手 · 怎么做</div>
+        <h2>量化教学指南 →</h2>
+        <p>可运行的 Python 实现：数据、因子、回测、机器学习与深度学习，本地跑通、图表内嵌。</p>
+      </a>
+      <a class="card survey" href="/survey/">
+        <div class="tag">脉络 · 为什么</div>
+        <h2>量化技术综述 →</h2>
+        <p>从传统 ML 到深度学习、强化学习、大模型与 Agent 的完整技术脉络与失败模式。</p>
+      </a>
+    </div>
+
+    <p class="note">个人学习用 · 内容仅供学习研究，不构成任何投资建议。</p>
+  </div>
+</body>
+</html>

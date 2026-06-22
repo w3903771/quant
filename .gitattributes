@@ -1,0 +1,13 @@
+# 统一文本文件以 LF 入库（避免 Windows CRLF 进仓库，保证 Ubuntu CI 构建一致）
+* text=auto eol=lf
+
+# 二进制资源不做换行转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text eol=lf
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.parquet binary

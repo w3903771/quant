@@ -1,0 +1,66 @@
+# 构建「量化指南 + 量化综述」两本书，合并为一个站点，部署到 GitHub Pages
+# 部署后访问： https://quant.ebook.ttzg.site/  （/guide/ 与 /survey/）
+#
+# 前置（仅一次性，见 DEPLOY.md）：
+#   1) 仓库 Settings → Pages → Source 选 "GitHub Actions"
+#   2) Settings → Pages → Custom domain 填 quant.ebook.ttzg.site，勾 Enforce HTTPS
+#   3) DNS 加 CNAME： quant.ebook  ->  <你的GitHub用户名>.github.io
+#
+# 说明：本站不在 CI 里跑任何量化/深度学习代码——图表是本地预先跑好、以静态图提交进仓库的，
+#       所以 CI 只需安装文档生成器（mkdocs-material + jieba），构建极快。
+
+name: Deploy quant ebook
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只跑一个部署，新提交取消进行中的旧部署
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 安装文档工具链
+        run: pip install mkdocs-material jieba
+
+      - name: 构建 指南 -> _site/guide
+        run: mkdocs build -f mkdocs.guide.yml
+
+      - name: 构建 综述 -> _site/survey
+        run: mkdocs build -f mkdocs.survey.yml
+
+      - name: 放置学科首页与自定义域名
+        run: |
+          cp home/index.html _site/index.html
+          echo 'quant.ebook.ttzg.site' > _site/CNAME
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

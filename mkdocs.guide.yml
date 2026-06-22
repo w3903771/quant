@@ -1,0 +1,84 @@
+# MkDocs 配置 —— 【量化指南】站
+# 预览： uv run mkdocs serve -f mkdocs.guide.yml
+# 构建： uv run mkdocs build -f mkdocs.guide.yml   （产物 -> _site/guide/）
+# 部署见 DEPLOY.md
+
+site_name: 量化投资 · 教学指南
+site_description: 可运行的 Python 量化教学指南 —— 原理 + 公式 + 可运行代码（PyTorch + 真实数据）
+site_author: ttzg
+site_url: https://quant.ebook.ttzg.site/guide/
+copyright: © 2026 ttzg · 个人学习用 · 内容仅供学习，不构成任何投资建议
+
+# 本站只发布 guide/ 这一本书
+docs_dir: guide
+site_dir: _site/guide
+
+# 不发布到站点的内部规划文件（仍留在仓库里供写作用）
+exclude_docs: |
+  OUTLINE.md
+  code/
+  data/
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.instant      # 客户端无刷新跳转（需配合 js/mathjax.js 重排公式）
+    - navigation.tracking
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - content.code.copy       # 代码块一键复制
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换到暗色
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到亮色
+
+markdown_extensions:
+  - admonition              # !!! note / warning 提示框
+  - pymdownx.details
+  - pymdownx.superfences    # 代码块 / 嵌套围栏
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.arithmatex:    # 数学：原生支持 $...$ 与 $$...$$
+      generic: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      # 中文分词：装了 jieba 后 Material 自动启用；下面的分隔符兼顾中英标点
+      separator: '[\s​\-、。，！？；：“”‘’（）《》【】]+'
+
+extra_javascript:
+  - js/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  # 两本书同域不同路径，跨书互链用根相对路径即可（换域名也不用改正文）
+  survey_url: /survey/
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/

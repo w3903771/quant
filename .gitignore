@@ -1,0 +1,25 @@
+# uv 虚拟环境与缓存
+.venv/
+__pycache__/
+*.pyc
+.python-version
+# uv 锁文件：个人学习环境不强制锁定；如需可复现可删除下一行改为提交 uv.lock
+uv.lock
+
+# 数据与产物缓存
+guide/data/
+data/
+*.csv
+*.parquet
+*.feather
+.ipynb_checkpoints/
+~/.qlib/
+
+# 图片输出（教学图允许提交者可在下方加白名单）
+guide/code/_out/
+
+# 文档站构建产物（mkdocs build 输出，CI 现场构建，不提交）
+_site/
+
+# 第三方框架源码（仅本地参考，不纳入版本库：体积大、各有独立许可证与 .git）
+reference/
