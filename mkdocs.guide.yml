@@ -9,7 +9,7 @@ site_author: ttzg
 site_url: https://quant.ebook.ttzg.site/guide/
 repo_url: https://github.com/w3903771/quant
 repo_name: w3903771/quant
-edit_uri: edit/main/guide/      # 每页“查看源码”按钮 → blob/main/guide/<page>.md（Material 由 edit→blob 自动推导）
+edit_uri: blob/main/guide/      # content.action.edit 原样拼接 → GitHub 渲染文件页 blob/main/guide/<page>.md
 copyright: © 2026 ttzg · 个人学习用 · 内容仅供学习，不构成任何投资建议
 
 # 本站只发布 guide/ 这一本书
@@ -24,7 +24,10 @@ exclude_docs: |
 
 theme:
   name: material
-  language: zh
+  language: custom          # 启用自定义翻译（overrides/，把“编辑此页”改为“在 GitHub 查看此页”）
+  custom_dir: overrides
+  icon:
+    edit: material/eye       # 查看图标（替换默认铅笔）
   features:
     - navigation.instant      # 客户端无刷新跳转（需配合 js/mathjax.js 重排公式）
     - navigation.tracking
@@ -34,7 +37,7 @@ theme:
     - toc.follow
     - content.code.copy       # 代码块一键复制
     - content.code.annotate
-    - content.action.edit     # 每页右上“编辑此页”按钮 → GitHub 上对应的 md 文件（edit/main/guide/<page>.md）
+    - content.action.edit     # 每页右上“查看此页”按钮（文案/图标已自定义）→ GitHub 渲染的 md 文件页
     - search.suggest
     - search.highlight
   palette:
