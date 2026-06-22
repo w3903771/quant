@@ -7,6 +7,9 @@ site_name: 量化投资 · 技术综述
 site_description: 详尽中文技术综述：从传统 ML 到深度学习、强化学习、大模型与 Agent
 site_author: ttzg
 site_url: https://quant.ebook.ttzg.site/survey/
+repo_url: https://github.com/w3903771/quant
+repo_name: w3903771/quant
+edit_uri: edit/main/survey/     # 每页“查看源码”按钮 → blob/main/survey/<page>.md
 copyright: © 2026 ttzg · 个人学习用 · 内容仅供学习，不构成任何投资建议
 
 docs_dir: survey
@@ -28,6 +31,7 @@ theme:
     - toc.follow
     - content.code.copy
     - content.code.annotate
+    - content.action.edit     # 每页右上“编辑此页”按钮 → GitHub 上对应的 md 文件（edit/main/survey/<page>.md）
     - search.suggest
     - search.highlight
   palette:
@@ -79,4 +83,4 @@ extra:
   guide_url: /guide/
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/w3903771
+      link: https://github.com/w3903771/quant/tree/main/survey   # 右下角 → 本书在仓库的文件夹
