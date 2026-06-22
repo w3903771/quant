@@ -1,7 +1,7 @@
 # 教学指南大纲 · d2l 风格的 Python 量化实战手册
 
 > 对齐 https://d2l.ai/ ：每节"动机 → 直觉 → 数学 → 从零实现 → 框架实现 → 实验/可视化 → 小结 → 练习"。
-> **双份代码**：md 内片段（teaching snippet） + `code/chXX_<slug>.py` 完整可运行脚本（`uv run python` 跑通）。
+> **双份代码**：**内嵌脚本**（md 内 teaching snippet，跟讲解走、不单独运行） + **完整脚本** `code/chXX/<slug>.py`（自身端到端可独立运行；"完整"≠"一个脚本产出整章结果"，一章常含多个完整脚本，按 `code/chXX/` 子目录归集；**随站点发布**，正文以链接指向，不在章末整体内嵌）。
 > 运行环境：本目录独立 uv 环境（PLAN §4.2）。重依赖按章 `uv sync --group ...`。
 
 约定：每章顶部含「本章你将学到 / 前置 / 本章新增依赖+安装命令 / 数据来源 / 对应综述章节 / **运行状态三态**(已实跑✅·仅静态检查🟦·环境受阻⬜)」。
@@ -45,7 +45,7 @@
 - 0F.6 工具谱系：股票/指数/ETF/LOF、可转债、期货(保证金/杠杆/展期)、期权(权利金/行权/希腊值直觉)
 - 0F.7 参与者与生态：散户/公募/私募/外资/做市商；买方卖方；A股制度速览(承接综述1.5)
 - 0F.8 从"金融问题"到"可计算问题"：本书后续技术如何回答这些金融问题（与各章呼应索引）
-- 代码：`code/ch0F_finance_basics.py`（取数演示估值/复权/收益口径差异，可视化）
+- 代码：`code/ch0F/finance_basics.py`（取数演示估值/复权/收益口径差异，可视化）
 - 对应综述：01、附录D 详解词典
 
 ### ch00 环境、数据与你的第一个策略
@@ -53,7 +53,7 @@
 - 0.2 uv 环境与运行方式；akshare/yfinance 取数第一课（A股+美股）
 - 0.3 价格→收益→净值曲线；可视化
 - 0.4 第一个可回测策略：均线交叉（从零实现最小回测；**用日频、不触发 T+1 的玩具形式**，含手续费占位+下一bar成交；完整版回测/绩效留 ch04，制度坑 ch04 讲透）
-- 代码：`code/ch00_first_strategy.py`
+- 代码：`code/ch00/first_strategy.py`
 - 对应综述：01
 
 ### ch01 金融数据处理与可视化
@@ -61,7 +61,7 @@
 - 1.2 复权原理与实现；幸存者偏差与 point-in-time 直观演示
 - 1.3 技术指标从零实现（MA/EMA/RSI/MACD/布林带）与向量化
 - 1.4 横截面数据结构（多股票面板）、去极值/标准化/行业中性化
-- 代码：`code/ch01_data_pipeline.py`、`code/ch01_indicators.py`
+- 代码：`code/ch01/data_pipeline.py`、`code/ch01/indicators.py`
 - 对应综述：02
 
 ### ch02 收益、风险与组合理论（瘦身版，避免早段过载）
@@ -69,7 +69,7 @@
 - 2.2 均值-方差优化：解析解 + scipy 数值优化，画有效前沿（**从零，必做**）
 - 2.3 最小方差 / 最大 Sharpe（从零）
 - 〔风险平价、Ledoit-Wolf 收缩、Black-Litterman **上移到 ch13 实战**，消除与 ch13 重叠、降低本章坡度〕
-- 代码：`code/ch02_meanvar.py`
+- 代码：`code/ch02/meanvar.py`
 - 对应综述：03（**ch02=组合理论基础**）
 
 ### ch03 因子与多因子模型
@@ -79,7 +79,7 @@
 - 3.4 用 alphalens 做规范因子分析（框架实现）
 - 3.5 **行为金融与微观结构因子**〔QuantsPlaybook〕：APM(隔夜/日间分离反转)、聪明钱、振幅隐藏结构、处置效应 CGO、筹码分布 CYQ——每个先讲行为金融成因再实现
 - 3.6 **排序学习选股(Learning-to-Rank)**：用 LightGBM `lambdarank` 做截面排序（对照 QuantsPlaybook 球队硬币因子用 LGBMRanker）
-- 代码：`code/ch03_single_factor.py`、`code/ch03_multifactor.py`、`code/ch03_behavioral_factors.py`
+- 代码：`code/ch03/single_factor.py`、`code/ch03/multifactor.py`、`code/ch03/behavioral_factors.py`
 - 对应综述：04
 
 ### ch04 回测引擎与绩效评估
@@ -89,7 +89,7 @@
 - 4.3 框架实现：vectorbt 向量化回测 与 backtrader 事件驱动对照〔QuantsPlaybook hugos_toolkit / stock backtest〕
 - 4.4 过拟合治理实验（**可跑**）：参数寻优"虚假最优"、walk-forward、**PBO/CSCV 回测过拟合概率 + Deflated Sharpe 从零实现**〔QuantsPlaybook CSCV/PBO〕、雪球策略验证式样本外复检
 - 4.5 **参数寻优方法对比**：网格 vs **遗传/进化搜索(GA)**〔abu GridSearch、vnpy DEAP、QuantsPlaybook DE〕
-- 代码：`code/ch04_backtester.py`、`code/ch04_metrics.py`、`code/ch04_slippage.py`、`code/ch04_pbo_dsr.py`
+- 代码：`code/ch04/backtester.py`、`code/ch04/metrics.py`、`code/ch04/slippage.py`、`code/ch04/pbo_dsr.py`
 - 新增依赖：`uv sync --group backtest`（注意 numpy2/pandas3 兼容，必要时固定版本）
 - 对应综述：11
 
@@ -102,7 +102,7 @@
 - 5.4 防泄漏 pipeline 与特征重要性
 - 5.5 **元标签与交易级信号拦截器(UMP 式)**〔abu UmpBu〕：在历史交易记录上训练分类器二次过滤信号（主裁=对订单特征学分类、边裁=KNN/距离的相似裁决）；López de Prado meta-labeling 落地
 - 5.6 **IPCA（工具化主成分/条件因子模型）**简介〔QuantsPlaybook〕：让因子载荷随特征变化，承接综述 05.5
-- 代码：`code/ch05_ml_pipeline.py`、`code/ch05_purged_cv.py`、`code/ch05_meta_labeling.py`
+- 代码：`code/ch05/ml_pipeline.py`、`code/ch05/purged_cv.py`、`code/ch05/meta_labeling.py`
 - 对应综述：05
 
 ### ch06 树模型、梯度提升与 Qlib 工作流
@@ -110,7 +110,7 @@
 - 6.2 截面选股实战：训练、滚动预测、构建多空组合并回测
 - 6.3 Microsoft Qlib 工作流：数据、Alpha158/Alpha360、模型、回测一体化
 - 6.4 Qlib 在 Windows/uv 的安装注记与最小可跑例
-- 代码：`code/ch06_lgbm_stock.py`、`code/ch06_qlib_workflow.py`
+- 代码：`code/ch06/lgbm_stock.py`、`code/ch06/qlib_workflow.py`
 - 新增依赖：`uv sync --group qlib`（版本兼容见章内注记）
 - 对应综述：05、13
 
@@ -119,7 +119,7 @@
 - 7.2 滑窗样本构造；MLP 基线
 - 7.3 LSTM/GRU 预测收益；TCN(时序卷积)
 - 7.4 IC loss / 排序损失；过拟合治理；与 LightGBM 对比
-- 代码：`code/ch07_torch_basics.py`、`code/ch07_lstm_tcn.py`
+- 代码：`code/ch07/torch_basics.py`、`code/ch07/lstm_tcn.py`
 - 新增依赖：`uv sync --group dl`
 - 对应综述：06、07
 
@@ -128,7 +128,7 @@
 - 8.2 股票关系图构建（相关性/行业/供应链）；**网络/图因子**〔QuantsPlaybook〕：股票网络中心度因子、隔夜-日间 lead-lag 滞后相关网络 + 聚类
 - 8.3 GCN/GAT 截面关系建模最小实现
 - 8.4 何时值得上 Transformer/GNN：与基线的诚实对比
-- 代码：`code/ch08_transformer_ts.py`、`code/ch08_stock_gnn.py`
+- 代码：`code/ch08/transformer_ts.py`、`code/ch08/stock_gnn.py`
 - 新增依赖：`uv sync --group dl`（GNN 视情况用 torch 自实现，避免 PyG 安装负担）
 - 对应综述：06
 
@@ -139,7 +139,7 @@
 - 9.2 从零 DQN 直觉 → 用 stable-baselines3 跑 PPO
 - 9.3 单标的择时 与 组合配置两类任务
 - 9.4 FinRL 概览与最小例；奖励设计与过拟合陷阱
-- 代码：`code/ch09_trading_env.py`、`code/ch09_ppo_trade.py`
+- 代码：`code/ch09/trading_env.py`、`code/ch09/ppo_trade.py`
 - 新增依赖：`uv sync --group rl`
 - 对应综述：08
 
@@ -148,7 +148,7 @@
 - 10.1 基础模型范式：预训练 + zero/few-shot 时序预测
 - 10.2 实操：Chronos / TimesFM / Lag-Llama 之一做 zero-shot 预测对比经典基线
 - 10.3 局限：金融低信噪比下的现实表现、泄漏与评测
-- 代码：`code/ch10_ts_foundation.py`
+- 代码：`code/ch10/ts_foundation.py`
 - 新增依赖：`uv sync --group dl nlp`（按所选模型）
 - 对应综述：07、09
 
@@ -157,7 +157,7 @@
 - 11.1 金融文本情绪：词典法 → FinBERT → LLM 抽取
 - 11.2 用情绪/事件构造因子并回测其增量
 - 11.3 用 LLM(API 或本地小模型)生成可解释信号的流程与防泄漏
-- 代码：`code/ch11_sentiment_factor.py`
+- 代码：`code/ch11/sentiment_factor.py`
 - 新增依赖：`uv sync --group nlp`
 - 对应综述：09
 
@@ -167,7 +167,7 @@
 - 12.2 从零搭一个"研究助理"Agent：给定假设→取数→回测→产出报告
 - 12.3 多 Agent 协作范式(分析/交易/风控/辩论)概念与最小演示
 - 12.4 成本/延迟/幻觉/越权与人在回路；清醒的能力边界
-- 代码：`code/ch12_research_agent.py`
+- 代码：`code/ch12/research_agent.py`
 - 对应综述：10
 
 ## Part 3 · 工程与实战
@@ -180,14 +180,14 @@
 - 13.5 **头寸规模(position sizing)**〔abu BetaBu〕：Kelly 公式、ATR/波动率目标仓位、配对仓位、最大仓位约束——逐笔头寸与组合权重的关系
 - 13.6 **启发式组合优化**〔QuantsPlaybook〕：DE 差分进化(回撤最小目标)、HRP 层次风险平价——非凸/稳健优化
 - 13.7 **因子/策略工程化框架设计模式**〔abu 买卖因子基类+装饰器、vnpy App 架构〕：可扩展、可注册、优化与策略解耦
-- 代码：`code/ch13_portfolio_construction.py`、`code/ch13_position_sizing.py`
+- 代码：`code/ch13/portfolio_construction.py`、`code/ch13/position_sizing.py`
 - 对应综述：12（**ch13=带约束实战**）
 
 ### ch14 完整 pipeline 与实盘工程
 - 14.1 串起来：数据→因子/预测→组合→回测→归因 的端到端流水线
 - 14.2 实盘鸿沟：实现差、容量、监控、再训练节奏
 - 14.3 工程化：配置管理、复现、定时任务、纸上交易；走向实盘的清单
-- 代码：`code/ch14_end_to_end.py`
+- 代码：`code/ch14/end_to_end.py`
 - 对应综述：11、13、14
 
 ## Part 4 · A股实务与实盘工程（四框架对标，PLAN §8）
@@ -201,7 +201,7 @@
 - 15.5 **涨跌停与情绪**：封单金额、连板强度、一字板开板、情绪周期
 - 15.6 **股权质押**风险因子；事件驱动选股
 - 15.7 数据管道工程：爬虫(requests/parsel/selenium)+ MySQL/MongoDB/ES 存储 + 实时监控告警(邮件/微信/钉钉)
-- 代码：`code/ch15_longhubang_factor.py`、`code/ch15_kzz_arbitrage.py`、`code/ch15_data_pipeline.py`
+- 代码：`code/ch15/longhubang_factor.py`、`code/ch15/kzz_arbitrage.py`、`code/ch15/data_pipeline.py`
 - 对应综述：01.5、02.1、13
 
 ### ch16 事件驱动实盘交易系统　【重】〔对标 vnpy〕
@@ -213,7 +213,7 @@
 - 16.5 **订单执行算法**：TWAP/Iceberg/Sniper/BestLimit 拆单（呼应综述 08.3/11.1b 最优执行）
 - 16.6 实盘风控：交易流控、下单量/撤单数前端限制；断线重连、对账
 - 16.7 期权/价差延伸：IV 曲面与希腊值跟踪（option_master，了解级）
-- 代码：`code/ch16_event_engine.py`、`code/ch16_ctp_demo.py`（🟦 仿真环境受限时标注）
+- 代码：`code/ch16/event_engine.py`、`code/ch16/ctp_demo.py`（🟦 仿真环境受限时标注）
 - 对应综述：11、13
 
 ## 附录

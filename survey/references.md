@@ -71,7 +71,7 @@
 - [R44] ⬜ 编排框架：LangGraph / AutoGen / CrewAI（文档为准）。
 
 ## K. Kaggle 竞赛与公开 notebook（✅ 竞赛已核验，notebook 逐条补链接）
-> 一等代码/工程范式来源。改编入指南时注明来源并用 A股/通用数据重写（PLAN §2、§4.1）。
+> 一等代码/工程范式来源。改编入指南时注明来源，并用 A股/通用数据重写为可独立运行。
 - [R45] ✅ **Jane Street Market Prediction** (2020–2021) — 高频/中频信号、特征匿名化、效用最大化目标、严格防泄漏 CV。kaggle.com/competitions/jane-street-market-prediction
 - [R46] ✅ **Jane Street Real-Time Market Data Forecasting** (2024) — 时序 responders 预测、在线评测。kaggle.com/competitions/jane-street-real-time-market-data-forecasting
 - [R47] ✅ **Optiver Realized Volatility Prediction** (2021) — 高频订单簿/成交特征、已实现波动率建模。kaggle.com/competitions/optiver-realized-volatility-prediction
@@ -81,10 +81,10 @@
 - [R51] 🟦 **G-Research Crypto Forecasting** (2021–2022)、**Ubiquant Market Prediction** (2022)、**JPX Tokyo Stock Exchange Prediction** (2022) — 截面收益预测范式（落笔前可再核验细节）。
 
 ## J. 网络资料 / 课程 / 社区（✅ 逐条补链接）
-- [R52] ✅ d2l.ai —《动手学深度学习》（本指南风格对齐对象）。
+- [R52] ✅ 《动手学深度学习》（Aston Zhang 等）——开源、动手式的深度学习教材，以"原理 + 公式 + 可运行代码"组织。
 - [R53] ⬜ 量化社区/博客（聚宽、米筐、QuantStart、Quantopian 遗产文档等）逐条补。
 
-## L. 对标框架（本工程 `reference/`，需完整覆盖，见 `COVERAGE_frameworks.md`）
+## L. 对标框架（本工程 `reference/`，需完整覆盖，做到学完能独立读懂）
 - [R58] ✅ **abu(阿布量化 abupy)** — 择时买卖因子体系、Kelly/ATR 仓位管理、滑点模型、UMP 机器学习交易拦截(主裁/边裁)、GA 参数寻优、多市场。`reference/abu/`
 - [R59] ✅ **QuantsPlaybook**(hugo2046) — 券商金工研报复现集：基本面/因子构建/择时/组合优化 + hugos_toolkit/SignalMaker。`reference/QuantsPlaybook/`
 - [R60] ✅ **stock** — A股+港股+可转债+基金多源数据/分析/回测/ML 工具集，含龙虎榜/打新/可转债/质押/大单监控。`reference/stock/`
@@ -99,6 +99,16 @@
 - [R66] ⬜ **Kelly 准则**（Kelly 1956）。
 - [R67] ⬜ **凸显理论 STR / salience**（Bordalo, Gennaioli & Shleifer）、**APM/聪明钱/处置效应CGO/筹码CYQ** 等行为/微观因子（多为中文研报，逐一核验来源）。
 - [R68] ⬜ **HHT(EMD)**（Huang et al. 1998）、**VMD**（Dragomiretskiy & Zosso 2014）。
+
+## N. 金融基础教材与 A股制度来源（ch0F 新增）
+- [R69] 🟦 Bodie, Z., Kane, A. & Marcus, A. *Investments*（投资学经典教材：市场结构 / 估值 / 风险与组合基础）。
+- [R70] 🟦 Hull, J. *Options, Futures, and Other Derivatives*（期货 / 期权 / 保证金 / 希腊值标准参考）。
+- [R71] ✅ 上交所 / 深交所 / 北交所**交易规则**与收费一览（涨跌停、交易时间、佣金/经手费/证管费、交易单位）；核验于 2026-06：主板 ±10%、创业板/科创板 ±20%、北交所 ±30%(首日不设限)、注册制新股上市前 5 日不设涨跌幅；主板 ST 自 2025-06 放宽至 ±10%、*ST 仍 ±5%。来源：sse.com.cn / szse.cn / bse.cn。
+- [R72] ✅ 财政部·税务总局《关于减半征收证券交易印花税的公告》（2023-08-28 起，证券交易印花税由出让方单边 0.1% → **0.05%**）。
+- [R73] ✅ 中国证监会 2024 年融券 / 转融券逆周期监管系列公告：2024-01 全面暂停**限售股出借**、约定申报实时→次日可用；2024-07 经批准**全面暂停转融券业务**并上调融券保证金比例（80%→100%，私募→120%）；2024-10 转融券余额清零。来源：csrc.gov.cn。
+- [R74] ✅ 中国证券登记结算公司（中国结算）股票交易**过户费**标准：2022-04-29 起总体下调 50% 至成交金额约 **0.001%**（双边）。来源：chinaclear.cn / cls.cn 转引。
+- [R75] 🟦 Sortino, F. & Price, L. (1994). *Performance Measurement in a Downside Risk Framework*（索提诺比率 / 下行偏差 target semideviation 口径）。
+- [R76] 🟦 **思想参照**（ch0F 哲学思辨锚点）：Knight, F. *Risk, Uncertainty and Profit* (1921，风险≠不确定性)；Popper, K. *The Logic of Scientific Discovery* (1959，可证伪性)；Soros, G. *The Alchemy of Finance* (1987，反身性 reflexivity)；Graham/Buffett "价格 vs 价值"。
 
 ---
 > 维护规则：写每章时，新增引用追加到对应分类并给编号；2023+ 项必须先核验再从 ⬜ 升级到 ✅，核验失败则删除或明确标注存疑。
