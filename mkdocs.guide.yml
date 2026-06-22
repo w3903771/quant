@@ -77,8 +77,10 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 extra:
+  # 点击左上角站点标题 → 返回学科首页（quant.ebook.ttzg.site 根），全站每页生效
+  homepage: https://quant.ebook.ttzg.site/
   # 两本书同域不同路径，跨书互链用根相对路径即可（换域名也不用改正文）
   survey_url: /survey/
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/
+      link: https://github.com/w3903771
